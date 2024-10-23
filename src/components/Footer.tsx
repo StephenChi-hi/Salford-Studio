@@ -120,7 +120,7 @@ function Footer() {
                 {" "}
                 <ParagraphLink2
                   className={
-                    pathname === "/about-us"
+                    pathname === "/gallery"
                       ? "text-[#ECECEC] font-bold "
                       : " text-[#ECECEC] "
                   }
