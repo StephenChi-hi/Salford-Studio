@@ -50,6 +50,11 @@ const Overview = () => {
     event.preventDefault();
   };
 
+  // Disable long-press for mobile devices
+  const handleTouchStart = (event: React.TouchEvent<HTMLImageElement>) => {
+    event.preventDefault(); // This prevents long-press actions
+  };
+
   return (
     <div className="mt-[100px]">
       <div className="container mx-auto">
@@ -84,6 +89,8 @@ const Overview = () => {
                         alt={`Image ${image.id}`} // Simple alt text
                         className="h-full w-full object-cover"
                         onContextMenu={handleContextMenu} // Disable right-click
+                        onTouchStart={handleTouchStart} // Disable long-press on mobile
+                        draggable={false} // Disable dragging of the image
                       />
                     </div>
                   );
