@@ -54,7 +54,7 @@ const Overview = () => {
     <div className="mt-[100px]">
       <div className="container mx-auto">
         <div className="min-h-screen space-y-4">
-          <div className="grid grid-cols-2 sm:grid-cols-6 gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-6 gap-2 sm:p-0 p-4">
             {loading
               ? // Show placeholder loader (black boxes) while images are loading
                 Array.from({ length: 9 }).map((_, index) => {

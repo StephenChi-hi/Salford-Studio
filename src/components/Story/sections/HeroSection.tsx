@@ -41,7 +41,7 @@ function HeroSection() {
           className="absolute inset-0 bg-cover xl:-top-[100px] xl:-left-[0px] -left-[150px] -top-[24px] bg-center- z-0"
           style={{
             backgroundImage:
-              "url('https://res.cloudinary.com/dcb4ilgmr/image/upload/v1729525367/utilities/templates/urban-vintage-ScNzlHZejSU-unsplash_dhylzf.jpg')",
+              "url('https://res.cloudinary.com/dcb4ilgmr/image/upload/w_1000,f_auto/v1729525367/utilities/templates/urban-vintage-ScNzlHZejSU-unsplash_dhylzf.jpg')",
           }}
         ></div>
         {/* Dark overlay for the background image */}

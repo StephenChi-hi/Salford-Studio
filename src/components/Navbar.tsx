@@ -27,7 +27,9 @@ function Navbar() {
   return (
     <div
       className={
-        ["/contact-us", "/privacy-policy", "/terms-of-service"].includes(pathname)
+        ["/contact-us", "/privacy-policy", "/terms-of-service"].includes(
+          pathname
+        )
           ? "bg-bg_gray  py-[8px] "
           : " bg-white py-[8px] fixed flex w-full z-20"
       }
@@ -102,6 +104,16 @@ function Navbar() {
                   }
                 >
                   About
+                </ParagraphLink1>
+              </Link>
+              <Link href="/gallery">
+                {" "}
+                <ParagraphLink1
+                  className={
+                    pathname === "/gallery" ? "text-primary font-bold " : "  "
+                  }
+                >
+                  Gallery
                 </ParagraphLink1>
               </Link>
               <Button

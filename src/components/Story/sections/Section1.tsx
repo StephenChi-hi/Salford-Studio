@@ -41,7 +41,7 @@ function Section1() {
               data-aos="fade-right"
             >
               <img
-                src="https://res.cloudinary.com/dcb4ilgmr/image/upload/v1729518941/utilities/templates/pxdfghjk_pfzu6t.jpg"
+                src="https://res.cloudinary.com/dcb4ilgmr/image/upload/w_1000,f_auto/v1729518941/utilities/templates/pxdfghjk_pfzu6t.jpg"
                 alt="photographer"
                 className="w-full rounded-lg"
               />{" "}
