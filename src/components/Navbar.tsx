@@ -106,7 +106,7 @@ function Navbar() {
                   About
                 </ParagraphLink1>
               </Link>
-              <Link href="/gallery">
+              <Link href="/gallery" onClick={toggleMenu}>
                 {" "}
                 <ParagraphLink1
                   className={
