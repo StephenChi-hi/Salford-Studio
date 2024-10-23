@@ -284,7 +284,8 @@ const FormComponent = () => {
                   </span>
                 </label>
               </div>
-              {formik.touched.contact_methods && formik.errors.contact_methods ? (
+              {formik.touched.contact_methods &&
+              formik.errors.contact_methods ? (
                 <div className="text-red-500 ">
                   {formik.errors.contact_methods}
                 </div>
@@ -300,83 +301,86 @@ const FormComponent = () => {
               </p>
 
               <div className="flex flex-col space-y-3">
-                <label className="inline-flex items-center">
-                  <input
-                    type="checkbox"
-                    name="services_needed"
-                    value="weddings"
-                    onChange={formik.handleChange}
-                    className="form-checkbox min-h-5 min-w-5 text-orange-500 appearance-none checked:bg-primary checked:border-transparent focus:outline-none border border-primary rounded checked:after:content-['✓'] checked:after:text-white checked:after:text-xs checked:after:flex checked:after:justify-center"
-                  />
-                  <span className="ml-2 text-gray-700">
-                    <ParagraphLink1 className="  text-cente ">
-                      {" "}
-                      Weddings
-                    </ParagraphLink1>
-                  </span>
-                </label>
-                <label className="inline-flex items-center">
-                  <input
-                    type="checkbox"
-                    name="services_needed"
-                    value="portraits"
-                    onChange={formik.handleChange}
-                    className="form-checkbox min-h-5 min-w-5 text-orange-500 appearance-none checked:bg-primary checked:border-transparent focus:outline-none border border-primary rounded checked:after:content-['✓'] checked:after:text-white checked:after:text-xs checked:after:flex checked:after:justify-center"
-                  />
-                  <span className="ml-2 text-gray-700">
-                    <ParagraphLink1 className="  text-cente ">
-                      {" "}
-                      Portraits
-                    </ParagraphLink1>
-                  </span>
-                </label>
-                <label className="inline-flex items-center">
-                  <input
-                    type="checkbox"
-                    name="services_needed"
-                    value="events"
-                    onChange={formik.handleChange}
-                    className="form-checkbox min-h-5 min-w-5 text-orange-500 appearance-none checked:bg-primary checked:border-transparent focus:outline-none border border-primary rounded checked:after:content-['✓'] checked:after:text-white checked:after:text-xs checked:after:flex checked:after:justify-center"
-                  />
-                  <span className="ml-2 text-gray-700">
-                    <ParagraphLink1 className="  text-cente ">
-                      {" "}
-                      Events
-                    </ParagraphLink1>
-                  </span>
-                </label>
-                <label className="inline-flex items-center">
-                  <input
-                    type="checkbox"
-                    name="services_needed"
-                    value="commercial"
-                    onChange={formik.handleChange}
-                    className="form-checkbox min-h-5 min-w-5 text-orange-500 appearance-none checked:bg-primary checked:border-transparent focus:outline-none border border-primary rounded checked:after:content-['✓'] checked:after:text-white checked:after:text-xs checked:after:flex checked:after:justify-center"
-                  />
-                  <span className="ml-2 text-gray-700">
-                    <ParagraphLink1 className="  text-cente ">
-                      {" "}
-                      Commercial
-                    </ParagraphLink1>
-                  </span>
-                </label>
-                <label className="inline-flex items-center">
-                  <input
-                    type="checkbox"
-                    name="services_needed"
-                    value="others"
-                    onChange={formik.handleChange}
-                    className="form-checkbox min-h-5 min-w-5 text-orange-500 appearance-none checked:bg-primary checked:border-transparent focus:outline-none border border-primary rounded checked:after:content-['✓'] checked:after:text-white checked:after:text-xs checked:after:flex checked:after:justify-center"
-                  />
-                  <span className="ml-2 text-gray-700">
-                    <ParagraphLink1 className="  text-cente ">
-                      {" "}
-                      Others
-                    </ParagraphLink1>
-                  </span>
-                </label>
+                <div className=" grid grid-cols-2 gap-3">
+                  <label className="inline-flex items-center">
+                    <input
+                      type="checkbox"
+                      name="services_needed"
+                      value="weddings"
+                      onChange={formik.handleChange}
+                      className="form-checkbox min-h-5 min-w-5 text-orange-500 appearance-none checked:bg-primary checked:border-transparent focus:outline-none border border-primary rounded checked:after:content-['✓'] checked:after:text-white checked:after:text-xs checked:after:flex checked:after:justify-center"
+                    />
+                    <span className="ml-2 text-gray-700">
+                      <ParagraphLink1 className="  text-cente ">
+                        {" "}
+                        Weddings
+                      </ParagraphLink1>
+                    </span>
+                  </label>
+                  <label className="inline-flex items-center">
+                    <input
+                      type="checkbox"
+                      name="services_needed"
+                      value="portraits"
+                      onChange={formik.handleChange}
+                      className="form-checkbox min-h-5 min-w-5 text-orange-500 appearance-none checked:bg-primary checked:border-transparent focus:outline-none border border-primary rounded checked:after:content-['✓'] checked:after:text-white checked:after:text-xs checked:after:flex checked:after:justify-center"
+                    />
+                    <span className="ml-2 text-gray-700">
+                      <ParagraphLink1 className="  text-cente ">
+                        {" "}
+                        Portraits
+                      </ParagraphLink1>
+                    </span>
+                  </label>
+                  <label className="inline-flex items-center">
+                    <input
+                      type="checkbox"
+                      name="services_needed"
+                      value="events"
+                      onChange={formik.handleChange}
+                      className="form-checkbox min-h-5 min-w-5 text-orange-500 appearance-none checked:bg-primary checked:border-transparent focus:outline-none border border-primary rounded checked:after:content-['✓'] checked:after:text-white checked:after:text-xs checked:after:flex checked:after:justify-center"
+                    />
+                    <span className="ml-2 text-gray-700">
+                      <ParagraphLink1 className="  text-cente ">
+                        {" "}
+                        Events
+                      </ParagraphLink1>
+                    </span>
+                  </label>
+                  <label className="inline-flex items-center">
+                    <input
+                      type="checkbox"
+                      name="services_needed"
+                      value="commercial"
+                      onChange={formik.handleChange}
+                      className="form-checkbox min-h-5 min-w-5 text-orange-500 appearance-none checked:bg-primary checked:border-transparent focus:outline-none border border-primary rounded checked:after:content-['✓'] checked:after:text-white checked:after:text-xs checked:after:flex checked:after:justify-center"
+                    />
+                    <span className="ml-2 text-gray-700">
+                      <ParagraphLink1 className="  text-cente ">
+                        {" "}
+                        Commercial
+                      </ParagraphLink1>
+                    </span>
+                  </label>
+                  <label className="inline-flex items-center">
+                    <input
+                      type="checkbox"
+                      name="services_needed"
+                      value="others"
+                      onChange={formik.handleChange}
+                      className="form-checkbox min-h-5 min-w-5 text-orange-500 appearance-none checked:bg-primary checked:border-transparent focus:outline-none border border-primary rounded checked:after:content-['✓'] checked:after:text-white checked:after:text-xs checked:after:flex checked:after:justify-center"
+                    />
+                    <span className="ml-2 text-gray-700">
+                      <ParagraphLink1 className="  text-cente ">
+                        {" "}
+                        Others
+                      </ParagraphLink1>
+                    </span>
+                  </label>
+                </div>
               </div>
-              {formik.touched.services_needed && formik.errors.services_needed ? (
+              {formik.touched.services_needed &&
+              formik.errors.services_needed ? (
                 <div className="text-red-500 ">
                   {formik.errors.services_needed}
                 </div>

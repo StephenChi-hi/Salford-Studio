@@ -18,7 +18,9 @@ function Footer() {
   return (
     <div
       className={
-        ["/contact-us", "/privacy-policy", "/terms-of-service"].includes(pathname)
+        ["/contact-us", "/privacy-policy", "/terms-of-service"].includes(
+          pathname
+        )
           ? "bg-bg_gray sm:py-[100px]"
           : " bg-white sm:py-[100px]"
       }
@@ -71,6 +73,31 @@ function Footer() {
                 </ParagraphLink2>
               </Link>
             </div>
+            <div className=" flex flex-col py-4 gap-4 items-center- justify-center-">
+              <div className=" flex gap-4 items-center">
+                <Link href="/">
+                  <img
+                    src="https://res.cloudinary.com/dcb4ilgmr/image/upload/v1729676533/utilities/templates/instagram_2_ujmgac.png"
+                    alt=""
+                    className="w-[20px] h-[20px]"
+                  />
+                </Link>
+                <Link href="/">
+                  <img
+                    src="https://res.cloudinary.com/dcb4ilgmr/image/upload/v1729676725/utilities/templates/facebook-app-symbol_x2whit.png"
+                    alt=""
+                    className="w-[20px] h-[20px]"
+                  />
+                </Link>
+                <Link href="/">
+                  <img
+                    src="https://res.cloudinary.com/dcb4ilgmr/image/upload/v1729675779/utilities/templates/twitter_3_sihd1i.png"
+                    alt=""
+                    className="w-[20px] h-[20px]"
+                  />
+                </Link>
+              </div>
+            </div>
           </div>
 
           {/* mobile  */}
@@ -101,6 +128,31 @@ function Footer() {
                   Gallery
                 </ParagraphLink2>
               </Link>
+              <div className=" flex flex-col p-4- gap-4 items-center- justify-center-">
+                <div className=" flex gap-4 items-center">
+                  <Link href="/">
+                    <img
+                      src="https://res.cloudinary.com/dcb4ilgmr/image/upload/v1729676533/utilities/templates/instagram_2_ujmgac.png"
+                      alt="instagram"
+                      className="w-[14px] h-[14px]"
+                    />
+                  </Link>
+                  <Link href="/">
+                    <img
+                      src="https://res.cloudinary.com/dcb4ilgmr/image/upload/v1729676725/utilities/templates/facebook-app-symbol_x2whit.png"
+                      alt="facebook"
+                      className="w-[14px] h-[14px]"
+                    />
+                  </Link>
+                  <Link href="/">
+                    <img
+                      src="https://res.cloudinary.com/dcb4ilgmr/image/upload/v1729675779/utilities/templates/twitter_3_sihd1i.png"
+                      alt=""
+                      className="w-[14px] h-[14px]"
+                    />
+                  </Link>
+                </div>
+              </div>
             </div>
 
             <div className="col-span-1 order-2 sm:order-1">
