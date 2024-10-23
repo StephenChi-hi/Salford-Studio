@@ -119,11 +119,7 @@ function Footer() {
               <Link href="/gallery">
                 {" "}
                 <ParagraphLink2
-                  className={
-                    pathname === "/gallery"
-                      ? "text-[#ECECEC] font-bold "
-                      : " text-[#ECECEC] "
-                  }
+                  className=" text-[#ECECEC] "
                 >
                   Gallery
                 </ParagraphLink2>
