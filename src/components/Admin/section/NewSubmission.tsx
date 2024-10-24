@@ -2,6 +2,7 @@
 
 import {
   Header1,
+  Header2,
   Header3,
   Header4,
   Header5,
@@ -43,6 +44,10 @@ function NewSubmission() {
   const [selectedSubmission, setSelectedSubmission] =
     useState<Submission | null>(null);
   const [loading, setLoading] = useState(true); // Loading state
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
+
+  const [totalSubmissions, setTotalSubmissions] = useState(0);
+  const [unreadCount, setUnreadCount] = useState(0);
 
   useEffect(() => {
     const fetchSubmissions = async () => {
@@ -89,6 +94,10 @@ function NewSubmission() {
             : null,
         }));
 
+        // Update total submissions and unread submissions count
+        setTotalSubmissions(submissionData.length);
+        setUnreadCount(submissionData.filter((s) => !s.viewed).length);
+
         // Sort submissions by timestamp, handling nulls
         submissionData.sort((a, b) => {
           // @ts-ignore
@@ -109,6 +118,17 @@ function NewSubmission() {
 
     fetchSubmissions();
   }, []);
+
+  // Filter unread submissions
+  const showUnreadSubmissions = () => {
+    const unread = submissions.filter((submission) => !submission.viewed);
+    setFilteredSubmissions(unread);
+  };
+
+
+  function showAllSubmissions() {
+    setFilteredSubmissions(submissions); // Show all submissions
+  }
 
   const handleClick = async (submission: Submission) => {
     // Update the viewed status in Firestore
@@ -151,6 +171,10 @@ function NewSubmission() {
     });
   });
 
+  const toggleFilter = () => {
+    setIsFilterOpen(!isFilterOpen);
+  };
+
   const formatTimestamp = (timestamp: Date | null): string => {
     if (!timestamp) return "N/A";
 
@@ -191,310 +215,374 @@ function NewSubmission() {
 
   return (
     <div className=" bg-bg_gray min-h-screen pb-[100px] text-[14px] sm:text-[14px] md:text-[16px] lg:text-[18px] xl:text-[19px] 2xl:text-[20px]">
-      <div className="container1  pt-[100px]  xl:pt-[104px] pb-[24px] ">
-        <Header4 className="text-black    ">
-          Admin Dashboard
-        </Header4>
-      </div>
-      <div className="mx-4 xl:mx-0">
-        <div className=" container1  bg-white py-[35px]  rounded-[15px] shadow-md">
-          <div className="px-4- xl:px-[37px]">
-            {selectedSubmission ? (
-              // Render the detailed view if a submission is selected
-              <div data-aos="zoom-in" className="">
-                <div className=" flex  border-b pb-2 w-full  gap-4 items-center">
-                  <button
-                    onClick={handleBack}
-                    className="hover:scale-110 transition-transform duration-300"
-                  >
-                    <img
-                      src="/icons/back1.svg"
-                      alt=""
-                      className=" w-[50px]- h-[25px] sm:h-[50px]"
-                    />
-                  </button>
+      <div className="mx- lg:mx-0">
+        <div className="container1  pt-[100px] xl:pt-[104px] pb-[24px] ">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+            <div className=" col-span-1">
+              {" "}
+              <div className=" w-full bg-white rounded-lg p-6">
+                {" "}
+                <Header5 className=" ">Total Form Submission </Header5>{" "}
+                <Header4 className="text-black ">{totalSubmissions}</Header4>
+              </div>
+            </div>
+            <div className=" col-span-1">
+              {" "}
+              <div className=" w-full bg-white rounded-lg p-6">
+                {" "}
+                <Header5 className=" ">Unread Submissions </Header5>{" "}
+                <Header4 className="text-black ">{unreadCount}</Header4>
+              </div>
+            </div>
+          </div>
 
-                  <div className=" flex w-full-">
-                    <div className="flex items-center space-x-4">
-                      <div
-                        className={`w-[50px] h-[50px] flex items-center justify-center text-white rounded-full bg-primary -${
-                          bgColors[
-                            selectedSubmission.id.length % bgColors.length
-                          ]
-                        }`}
+          <div className="mx-4- xl:mx-0 ">
+            <div className="  bg-white py-[35px] p  rounded-lg shadow-md">
+              <div className="px-4  xl:px-[37px]">
+                {selectedSubmission ? (
+                  // Render the detailed view if a submission is selected
+                  <div data-aos="zoom-in" className="">
+                    <div className=" flex  border-b pb-2 w-full  gap-4 items-center">
+                      <button
+                        onClick={handleBack}
+                        className="hover:scale-110 transition-transform duration-300"
                       >
-                        <span className="text-lg font-bold">
-                          {selectedSubmission.initials}
-                        </span>
+                        <img
+                          src="/icons/back1.svg"
+                          alt=""
+                          className=" w-[50px]- h-[25px] sm:h-[50px]"
+                        />
+                      </button>
+
+                      <div className=" flex w-full-">
+                        <div className="flex items-center space-x-4">
+                          <div
+                            className={`w-[50px] h-[50px] flex items-center justify-center text-white rounded-full bg-primary -${
+                              bgColors[
+                                selectedSubmission.id.length % bgColors.length
+                              ]
+                            }`}
+                          >
+                            <span className="text-lg font-bold">
+                              {selectedSubmission.initials}
+                            </span>
+                          </div>
+                          <div>
+                            <Header5 className="text-[23px] ">
+                              {selectedSubmission.name}
+                            </Header5>
+                            <Paragraph2 className="text-sm sm:-mt-2 font-semibold-">
+                              {selectedSubmission.email}
+                            </Paragraph2>
+                          </div>
+                        </div>
                       </div>
-                      <div>
-                        <Header5 className="text-[23px] ">
-                          {selectedSubmission.name}
-                        </Header5>
-                        <Paragraph2 className="text-sm sm:-mt-2 font-semibold-">
-                          {selectedSubmission.email}
+                    </div>
+
+                    <div className=" mt-[40px] space-y-[40px]">
+                      {" "}
+                      <div className=" px-4 sm:px-[30px] py-[39px] bg-bg_gray rounded-[15px] space-y-[40px]">
+                        <Paragraph2 className="text-sm text-gray-500 text-center underline-">
+                          {formatTimestamp(
+                            typeof selectedSubmission.timestamp === "string"
+                              ? new Date(selectedSubmission.timestamp) // Convert string to Date
+                              : selectedSubmission.timestamp // Use as is if it's already a Date object
+                          )}{" "}
+                          {/* Use the custom formatting function */}
                         </Paragraph2>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                        <div className=" grid grid-cols-1 xl:grid-cols-2 items-center gap-4 sm:gap-[40px] ">
+                          <div>
+                            <ParagraphLink1 className="  text-cente font-bold ">
+                              First Name
+                            </ParagraphLink1>
+                            <div className=" p-6 bg-white rounded-[12px]">
+                              <p className=" ">
+                                {selectedSubmission.firstName}
+                              </p>
+                            </div>
+                          </div>
+                          <div>
+                            <ParagraphLink1 className="  text-cente font-bold ">
+                              Last Name
+                            </ParagraphLink1>
+                            <div className=" p-6 bg-white rounded-[12px]">
+                              <p className=" ">
+                                {selectedSubmission.secondName}
+                              </p>
+                            </div>
+                          </div>
+                          <div>
+                            <ParagraphLink1 className="  text-cente font-bold ">
+                              E-mail address{" "}
+                            </ParagraphLink1>
+                            <div className=" p-6 bg-white rounded-[12px]">
+                              <p className=" ">{selectedSubmission.email}</p>
+                            </div>
+                          </div>
+                          <div>
+                            <ParagraphLink1 className="  text-cente font-bold ">
+                              Phone Number{" "}
+                            </ParagraphLink1>
+                            <div className=" p-6 bg-white rounded-[12px]">
+                              <p className=" ">
+                                {selectedSubmission.phoneNumber}
+                              </p>
+                            </div>
+                          </div>
+                          <div>
+                            <ParagraphLink1 className=" font-bold">
+                              Preferred Method of Contact
+                            </ParagraphLink1>
+                            <div className="flex w-full flex-col">
+                              <div className="mt-[12px] flex flex-col gap-[16px]">
+                                {Array.isArray(
+                                  selectedSubmission?.contact_methods
+                                ) &&
+                                  selectedSubmission?.contact_methods.map(
+                                    (contact_method, index) => {
+                                      // Render specific text based on the value of `quality`
+                                      let displayText = "";
 
-                <div className=" mt-[40px] space-y-[40px]">
-                  {" "}
-                  <div className=" px-4 sm:px-[30px] py-[39px] bg-bg_gray rounded-[15px] space-y-[40px]">
-                    <Paragraph2 className="text-sm text-gray-500 text-center underline-">
-                      {formatTimestamp(
-                        typeof selectedSubmission.timestamp === "string"
-                          ? new Date(selectedSubmission.timestamp) // Convert string to Date
-                          : selectedSubmission.timestamp // Use as is if it's already a Date object
-                      )}{" "}
-                      {/* Use the custom formatting function */}
-                    </Paragraph2>
-                    <div className=" grid grid-cols-1 xl:grid-cols-2 items-center gap-4 sm:gap-[40px] ">
-                      <div>
-                        <ParagraphLink1 className="  text-cente font-bold ">
-                          First Name
-                        </ParagraphLink1>
-                        <div className=" p-6 bg-white rounded-[12px]">
-                          <p className=" ">{selectedSubmission.firstName}</p>
-                        </div>
-                      </div>
-                      <div>
-                        <ParagraphLink1 className="  text-cente font-bold ">
-                          Last Name
-                        </ParagraphLink1>
-                        <div className=" p-6 bg-white rounded-[12px]">
-                          <p className=" ">{selectedSubmission.secondName}</p>
-                        </div>
-                      </div>
-                      <div>
-                        <ParagraphLink1 className="  text-cente font-bold ">
-                          E-mail address{" "}
-                        </ParagraphLink1>
-                        <div className=" p-6 bg-white rounded-[12px]">
-                          <p className=" ">{selectedSubmission.email}</p>
-                        </div>
-                      </div>
-                      <div>
-                        <ParagraphLink1 className="  text-cente font-bold ">
-                          Phone Number{" "}
-                        </ParagraphLink1>
-                        <div className=" p-6 bg-white rounded-[12px]">
-                          <p className=" ">{selectedSubmission.phoneNumber}</p>
-                        </div>
-                      </div>
-                      <div>
-                        <ParagraphLink1 className=" font-bold">
-                          Preferred Method of Contact
-                        </ParagraphLink1>
-                        <div className="flex w-full flex-col">
-                          <div className="mt-[12px] flex flex-col gap-[16px]">
-                            {Array.isArray(
-                              selectedSubmission?.contact_methods
-                            ) &&
-                              selectedSubmission?.contact_methods.map(
-                                (contact_method, index) => {
-                                  // Render specific text based on the value of `quality`
-                                  let displayText = "";
+                                      switch (contact_method) {
+                                        case "email":
+                                          displayText = "Email";
+                                          break;
+                                        case "phone_call":
+                                          displayText = "Phone call";
+                                          break;
+                                        case "whatsapp":
+                                          displayText = "WhatsApp";
+                                          break;
+                                        default:
+                                          displayText = "Unknown"; // Fallback text if needed
+                                      }
 
-                                  switch (contact_method) {
-                                    case "email":
-                                      displayText = "Email";
-                                      break;
-                                    case "phone_call":
-                                      displayText = "Phone call";
-                                      break;
-                                    case "whatsapp":
-                                      displayText = "WhatsApp";
-                                      break;
-                                    default:
-                                      displayText = "Unknown"; // Fallback text if needed
-                                  }
+                                      return (
+                                        <div
+                                          key={index}
+                                          className="flex items-center gap-[13px]"
+                                        >
+                                          <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            fill="none"
+                                            viewBox="0 0 24 24"
+                                            strokeWidth={1.5}
+                                            stroke="currentColor"
+                                            className="size-6"
+                                          >
+                                            <path
+                                              strokeLinecap="round"
+                                              strokeLinejoin="round"
+                                              d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+                                            />
+                                          </svg>
+                                          <ParagraphLink1 className="text-center font-bold">
+                                            {displayText}
+                                          </ParagraphLink1>
+                                        </div>
+                                      );
+                                    }
+                                  )}
+                              </div>
+                            </div>
+                          </div>
+                          <div>
+                            <ParagraphLink1 className=" font-bold">
+                              Type of Service Needed
+                            </ParagraphLink1>
+                            <div className="flex w-full flex-col">
+                              <div className="mt-[12px] flex flex-col gap-[16px]">
+                                {Array.isArray(
+                                  selectedSubmission?.services_needed
+                                ) &&
+                                  selectedSubmission.services_needed.map(
+                                    (service_needed, index) => {
+                                      // Render specific text based on the value of `service_needed`
+                                      let displayText = "";
 
-                                  return (
-                                    <div
-                                      key={index}
-                                      className="flex items-center gap-[13px]"
-                                    >
-                                      <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        fill="none"
-                                        viewBox="0 0 24 24"
-                                        strokeWidth={1.5}
-                                        stroke="currentColor"
-                                        className="size-6"
-                                      >
-                                        <path
-                                          strokeLinecap="round"
-                                          strokeLinejoin="round"
-                                          d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
-                                        />
-                                      </svg>
-                                      <ParagraphLink1 className="text-center font-bold">
-                                        {displayText}
-                                      </ParagraphLink1>
-                                    </div>
-                                  );
-                                }
-                              )}
+                                      switch (service_needed) {
+                                        case "weddings":
+                                          displayText = "Weddings";
+                                          break;
+                                        case "portraits":
+                                          displayText = "Portraits";
+                                          break;
+                                        case "events":
+                                          displayText = "Events";
+                                          break;
+                                        case "commercial":
+                                          displayText = "Commercial";
+                                          break;
+                                        case "others":
+                                          displayText = "Others";
+                                          break;
+                                        default:
+                                          displayText = "Unknown"; // Fallback text if needed
+                                      }
+
+                                      return (
+                                        <div
+                                          key={index}
+                                          className="flex items-center gap-[13px]"
+                                        >
+                                          <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            fill="none"
+                                            viewBox="0 0 24 24"
+                                            strokeWidth={1.5}
+                                            stroke="currentColor"
+                                            className="size-6"
+                                          >
+                                            <path
+                                              strokeLinecap="round"
+                                              strokeLinejoin="round"
+                                              d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+                                            />
+                                          </svg>
+                                          <ParagraphLink1 className="text-center font-bold">
+                                            {displayText}
+                                          </ParagraphLink1>
+                                        </div>
+                                      );
+                                    }
+                                  )}
+                              </div>
+                            </div>
+                          </div>
+
+                          <div>
+                            <ParagraphLink1 className="  text-cente font-bold ">
+                              Date of Event/Session
+                            </ParagraphLink1>
+                            <div className=" p-6 bg-white rounded-[12px]">
+                              <p className=" ">
+                                {selectedSubmission.eventDate}
+                              </p>
+                            </div>
+                          </div>
+                          <div>
+                            <ParagraphLink1 className="  text-cente font-bold ">
+                              Location of Event/Session{" "}
+                            </ParagraphLink1>
+                            <div className=" p-6 bg-white rounded-[12px]">
+                              <p className=" ">{selectedSubmission.location}</p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>{" "}
+                      <div className=" px-[30px] py-[39px] bg-bg_gray rounded-[15px] space-y-[40px]">
+                        <div>
+                          <ParagraphLink1 className="  text-cente font-bold ">
+                            Event Details/Message
+                          </ParagraphLink1>
+                          <div className=" p-6 bg-white rounded-[12px]">
+                            <p className=" ">
+                              {selectedSubmission.eventdetail}
+                            </p>
+                          </div>
+                        </div>
+
+                        <div>
+                          <ParagraphLink1 className="  text-cente font-bold ">
+                            Budget
+                          </ParagraphLink1>
+                          <div className=" p-6 bg-white rounded-[12px]">
+                            <p className=" ">$ {selectedSubmission.budget}</p>
+                          </div>
+                        </div>
+                        <div>
+                          <ParagraphLink1 className="  text-cente font-bold ">
+                            How Did You Hear About Us?
+                          </ParagraphLink1>
+                          <div className=" p-6 bg-white rounded-[12px]">
+                            <p className=" ">{selectedSubmission.aboutushow}</p>
                           </div>
                         </div>
                       </div>
-                      <div>
-                        <ParagraphLink1 className=" font-bold">
-                          Type of Service Needed
-                        </ParagraphLink1>
-                        <div className="flex w-full flex-col">
-                          <div className="mt-[12px] flex flex-col gap-[16px]">
-                            {Array.isArray(
-                              selectedSubmission?.services_needed
-                            ) &&
-                              selectedSubmission.services_needed.map(
-                                (service_needed, index) => {
-                                  // Render specific text based on the value of `service_needed`
-                                  let displayText = "";
+                    </div>
+                  </div>
+                ) : loading ? (
+                  <div className="flex justify-center items-center h-64">
+                    <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
+                  </div>
+                ) : (
+                  // Render the list of submissions if none is selected
+                  <div className="space-y-2 scrollable-div- overflow-y-auto- max-h-screen- ">
+                    <div className=" flex items-center justify-between gap-4">
+                      <SearchBar
+                        submissions={submissions}
+                        // @ts-ignore
+                        onSearchResults={setFilteredSubmissions}
+                      />
+                      <div className="relative">
+                        <button onClick={toggleFilter}>
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            strokeWidth={1.5}
+                            stroke="currentColor"
+                            className="size-6"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              d="M6 13.5V3.75m0 9.75a1.5 1.5 0 0 1 0 3m0-3a1.5 1.5 0 0 0 0 3m0 3.75V16.5m12-3V3.75m0 9.75a1.5 1.5 0 0 1 0 3m0-3a1.5 1.5 0 0 0 0 3m0 3.75V16.5m-6-9V3.75m0 3.75a1.5 1.5 0 0 1 0 3m0-3a1.5 1.5 0 0 0 0 3m0 9.75V10.5"
+                            />
+                          </svg>
+                        </button>
 
-                                  switch (service_needed) {
-                                    case "weddings":
-                                      displayText = "Weddings";
-                                      break;
-                                    case "portraits":
-                                      displayText = "Portraits";
-                                      break;
-                                    case "events":
-                                      displayText = "Events";
-                                      break;
-                                    case "commercial":
-                                      displayText = "Commercial";
-                                      break;
-                                    case "others":
-                                      displayText = "Others";
-                                      break;
-                                    default:
-                                      displayText = "Unknown"; // Fallback text if needed
-                                  }
+                        {isFilterOpen && (
+                          <div className="absolute space-y- z-10 -bottom-[120px] right-0 bg-white px-4 py-2 rounded-lg shadow-md">
+                            <button onClick={() => showAllSubmissions()}>
+                              <Paragraph2 className="text-sm whitespace-nowrap">
+                                All submissions
+                              </Paragraph2>
+                            </button>
 
-                                  return (
-                                    <div
-                                      key={index}
-                                      className="flex items-center gap-[13px]"
-                                    >
-                                      <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        fill="none"
-                                        viewBox="0 0 24 24"
-                                        strokeWidth={1.5}
-                                        stroke="currentColor"
-                                        className="size-6"
-                                      >
-                                        <path
-                                          strokeLinecap="round"
-                                          strokeLinejoin="round"
-                                          d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
-                                        />
-                                      </svg>
-                                      <ParagraphLink1 className="text-center font-bold">
-                                        {displayText}
-                                      </ParagraphLink1>
-                                    </div>
-                                  );
-                                }
-                              )}
+                            <button onClick={() => showUnreadSubmissions()}>
+                              <Paragraph2 className="text-sm whitespace-nowrap">
+                                All unread
+                              </Paragraph2>
+                            </button>
                           </div>
-                        </div>
-                      </div>
-
-                      <div>
-                        <ParagraphLink1 className="  text-cente font-bold ">
-                          Date of Event/Session
-                        </ParagraphLink1>
-                        <div className=" p-6 bg-white rounded-[12px]">
-                          <p className=" ">{selectedSubmission.eventDate}</p>
-                        </div>
-                      </div>
-                      <div>
-                        <ParagraphLink1 className="  text-cente font-bold ">
-                          Location of Event/Session{" "}
-                        </ParagraphLink1>
-                        <div className=" p-6 bg-white rounded-[12px]">
-                          <p className=" ">{selectedSubmission.location}</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>{" "}
-                  <div className=" px-[30px] py-[39px] bg-bg_gray rounded-[15px] space-y-[40px]">
-                    <div>
-                      <ParagraphLink1 className="  text-cente font-bold ">
-                        Event Details/Message
-                      </ParagraphLink1>
-                      <div className=" p-6 bg-white rounded-[12px]">
-                        <p className=" ">{selectedSubmission.eventdetail}</p>
+                        )}
                       </div>
                     </div>
 
-                    <div>
-                      <ParagraphLink1 className="  text-cente font-bold ">
-                        Budget
-                      </ParagraphLink1>
-                      <div className=" p-6 bg-white rounded-[12px]">
-                        <p className=" ">$ {selectedSubmission.budget}</p>
+                    <Header5 className="pt-3">New Submissions</Header5>
+                    {filteredSubmissions.map((submission, index) => (
+                      <div
+                        key={submission.id}
+                        className={`flex items-start  space-x-4 py-2 bg-white rounded-lg cursor-pointer hover:scale-105 transition-transform duration-300 ${
+                          submission.viewed ? "text-gray-400" : "" // Change text color for viewed submissions
+                        }`}
+                        onClick={() => handleClick(submission)}
+                      >
+                        <div
+                          className={`min-w-12 min-h-12 flex items-center justify-center mt-2 text-white rounded-full ${
+                            bgColors[index % bgColors.length]
+                          }`}
+                        >
+                          <span className="text-lg font-bold">
+                            {submission.initials}
+                          </span>
+                        </div>
+                        <div className="flex-1 w-full overflow-hidden border-b pb-4">
+                          <Paragraph1 className="text-lg font-semibold">
+                            {submission.name}
+                          </Paragraph1>
+
+                          <Paragraph2 className=" text-sm xl:-mt-2 truncate overflow-hidden whitespace-nowrap lg: max-w-[90%] -max-w-[300px]">
+                            {submission.eventdetail}
+                          </Paragraph2>
+                        </div>
                       </div>
-                    </div>
-                    <div>
-                      <ParagraphLink1 className="  text-cente font-bold ">
-                        How Did You Hear About Us?
-                      </ParagraphLink1>
-                      <div className=" p-6 bg-white rounded-[12px]">
-                        <p className=" ">{selectedSubmission.aboutushow}</p>
-                      </div>
-                    </div>
+                    ))}
                   </div>
-                </div>
+                )}
               </div>
-            ) : loading ? (
-              <div className="flex justify-center items-center h-64">
-                <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
-              </div>
-            ) : (
-              // Render the list of submissions if none is selected
-              <div className="space-y-2 scrollable-div- overflow-y-auto- max-h-screen- ">
-                <SearchBar
-                  submissions={submissions}
-                  // @ts-ignore
-                  onSearchResults={setFilteredSubmissions}
-                />
-
-                <Header5 className="pt-3">New Submissions</Header5>
-                {filteredSubmissions.map((submission, index) => (
-                  <div
-                    key={submission.id}
-                    className={`flex items-start  space-x-4 py-2 bg-white rounded-lg cursor-pointer hover:scale-105 transition-transform duration-300 ${
-                      submission.viewed ? "text-gray-400" : "" // Change text color for viewed submissions
-                    }`}
-                    onClick={() => handleClick(submission)}
-                  >
-                    <div
-                      className={`min-w-12 min-h-12 flex items-center justify-center mt-2 text-white rounded-full ${
-                        bgColors[index % bgColors.length]
-                      }`}
-                    >
-                      <span className="text-lg font-bold">
-                        {submission.initials}
-                      </span>
-                    </div>
-                    <div className="flex-1 w-full overflow-hidden border-b pb-4">
-                      <Paragraph1 className="text-lg font-semibold">
-                        {submission.name}
-                      </Paragraph1>
-
-                      <Paragraph2 className=" text-sm xl:-mt-2 truncate overflow-hidden whitespace-nowrap lg: max-w-[90%] -max-w-[300px]">
-                        {submission.eventdetail}
-                      </Paragraph2>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            )}
+            </div>
           </div>
         </div>
       </div>

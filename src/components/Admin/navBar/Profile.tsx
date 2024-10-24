@@ -12,7 +12,7 @@ const ProfileDropdown = () => {
 
   const handleSignOut = async () => {
     await signOut(auth);
-    router.push("/chrissy-only/auth/login"); // Redirect to sign-in after logging out
+    router.push("/admin/auth/login"); // Redirect to sign-in after logging out
   };
 
   const toggleDropdown = () => {
@@ -62,7 +62,7 @@ const ProfileDropdown = () => {
 
       {/* Dropdown Menu */}
       {isOpen && (
-        <div className="absolute right-0 mt-2 w-48 bg-white border- rounded-[8px]">
+        <div className="absolute right-0 mt-2 w-48 bg-white shadow-md border- rounded-[8px]">
           <div className="py-1">
             <button
               onClick={handleSignOut}
